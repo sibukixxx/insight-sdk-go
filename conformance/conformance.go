@@ -185,6 +185,70 @@ func call(ctx context.Context, c *insight.Client, op string, p map[string]string
 		return c.AppendIteration(ctx, p["researchRunId"], req)
 	case "getResearchRun":
 		return c.GetResearchRun(ctx, p["researchRunId"])
+	case "createDatasetProfile":
+		var req insight.CreateDatasetProfileRequest
+		if err := decode(&req); err != nil {
+			return nil, err
+		}
+		return c.CreateDatasetProfile(ctx, p["subjectId"], req)
+	case "getDatasetProfile":
+		return c.GetDatasetProfile(ctx, p["subjectId"], p["profileId"])
+	case "triage":
+		var req insight.TriageRequest
+		if err := decode(&req); err != nil {
+			return nil, err
+		}
+		return c.Triage(ctx, p["subjectId"], p["profileId"], req)
+	case "listSelectionPlans":
+		return c.ListSelectionPlans(ctx, p["subjectId"], p["profileId"])
+	case "getSelectionPlan":
+		return c.GetSelectionPlan(ctx, p["planId"])
+	case "reviseSelectionPlan":
+		var req insight.ReviseSelectionPlanRequest
+		if err := decode(&req); err != nil {
+			return nil, err
+		}
+		return c.ReviseSelectionPlan(ctx, p["planId"], req)
+	case "listAnalyses":
+		return c.ListAnalyses(ctx, p["subjectId"])
+	case "compareAnalyses":
+		return c.CompareAnalyses(ctx, p["subjectId"], p["analysisId"], p["otherAnalysisId"])
+	case "listResearchRuns":
+		return c.ListResearchRuns(ctx, p["subjectId"])
+	case "reEvaluate":
+		var req insight.ReEvaluationRequest
+		if err := decode(&req); err != nil {
+			return nil, err
+		}
+		return c.ReEvaluate(ctx, p["researchRunId"], req)
+	case "getScenarios":
+		return c.GetScenarios(ctx, p["researchRunId"])
+	case "createScenarioSet":
+		var req insight.CreateScenarioSetRequest
+		if err := decode(&req); err != nil {
+			return nil, err
+		}
+		return c.CreateScenarioSet(ctx, p["researchRunId"], req)
+	case "scaffoldScenarioSet":
+		var req insight.ScaffoldScenarioSetRequest
+		if err := decode(&req); err != nil {
+			return nil, err
+		}
+		return c.ScaffoldScenarioSet(ctx, p["researchRunId"], req)
+	case "evaluateScenarios":
+		var req insight.EvaluateScenariosRequest
+		if err := decode(&req); err != nil {
+			return nil, err
+		}
+		return c.EvaluateScenarios(ctx, p["researchRunId"], p["scenarioSetId"], req)
+	case "getResearchTimeline":
+		return c.GetResearchTimeline(ctx, p["researchRunId"])
+	case "applyTemporalOperation":
+		var req insight.TemporalOperationRequest
+		if err := decode(&req); err != nil {
+			return nil, err
+		}
+		return c.ApplyTemporalOperation(ctx, req)
 	}
 	return nil, fmt.Errorf("unknown op %q", op)
 }

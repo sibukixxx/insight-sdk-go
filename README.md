@@ -17,7 +17,7 @@ insight OSS
 ## Install
 
 ```sh
-go get github.com/sibukixxx/insight-sdk-go@v0.1.0
+go get github.com/sibukixxx/insight-sdk-go@v0.2.0
 ```
 
 ## Quickstart
@@ -46,17 +46,20 @@ Runnable example: `go run ./example/minimal -engine http://127.0.0.1:8787`.
 
 | SDK version | Contract versions | Pinned contract source |
 |---|---|---|
-| v0.1.x | `1` | `contract/v1` — see [contract/PROVENANCE.md](contract/PROVENANCE.md) |
+| v0.2.x | `1` (adds InputSource, ExecutionProfile, run comparison, re-evaluation, timeline, temporal operations, scenarios, data triage) | `contract/v1` — see [contract/PROVENANCE.md](contract/PROVENANCE.md) |
+| v0.1.x | `1` (original v0 surface) | insight `e6e402d` |
 
 - Pre-1.0 semver: minor versions may add operations/fields; patch versions never change behavior.
 - Unknown response fields are ignored (additive contract evolution). A response with a different `contractVersion` fails with `UNSUPPORTED_CONTRACT_VERSION`.
-- InputSource / RawArtifact (insight #90) and ExecutionProfile (insight #91) are additive follow-ups (#4, #5) and do not break v0 calls.
+- v0.2.0 added InputSource / RawArtifact (insight #90) and ExecutionProfile (insight #91) additively; every v0.1 call keeps working.
+- Types for operations added after v0.1 are generated from the pinned schema: `go run ./internal/typegen` (a test fails when `types_gen.go` is stale).
 
 ## Verification
 
 ```sh
 go vet ./... && go test ./...
-# live conformance against a running engine (deterministic fixtures):
+# live conformance against a running engine (deterministic fixtures; 08/09 need
+# -input-root pointing at contract/v1/fixtures/data and -heavy-dir):
 INSIGHT_DETERMINISTIC_URL=http://127.0.0.1:8787 go test ./conformance -run Live -v
 ```
 

@@ -29,12 +29,14 @@ type SchemaRef struct {
 }
 
 type EngineInfo struct {
-	ContractSchema            string      `json:"contractSchema"`
-	ContractVersion           string      `json:"contractVersion"`
-	SupportedContractVersions []string    `json:"supportedContractVersions"`
-	Engine                    EngineBuild `json:"engine"`
-	ResearchArtifact          SchemaRef   `json:"researchArtifact"`
-	AnalyticalArtifact        SchemaRef   `json:"analyticalArtifact"`
+	ContractSchema            string                 `json:"contractSchema"`
+	ContractVersion           string                 `json:"contractVersion"`
+	SupportedContractVersions []string               `json:"supportedContractVersions"`
+	Engine                    EngineBuild            `json:"engine"`
+	ResearchArtifact          SchemaRef              `json:"researchArtifact"`
+	AnalyticalArtifact        SchemaRef              `json:"analyticalArtifact"`
+	ExecutionProfiles         []ExecutionProfileInfo `json:"executionProfiles,omitempty"`
+	InputSourceKinds          []string               `json:"inputSourceKinds,omitempty"`
 }
 
 // CreateSubjectRequest creates or re-resolves a subject. ContractVersion and
@@ -73,6 +75,7 @@ type AddEvidenceRequest struct {
 	IdempotencyKey      string             `json:"idempotencyKey"`
 	Documents           []EvidenceDocument `json:"documents,omitempty"`
 	AnalyticalArtifacts []json.RawMessage  `json:"analyticalArtifacts,omitempty"`
+	InputSources        []InputSource      `json:"inputSources,omitempty"`
 }
 
 type EvidenceItemReceipt struct {
@@ -88,6 +91,7 @@ type EvidenceReceipt struct {
 	SubjectID           string                `json:"subjectId"`
 	Documents           []EvidenceItemReceipt `json:"documents"`
 	AnalyticalArtifacts []EvidenceItemReceipt `json:"analyticalArtifacts"`
+	InputSources        []InputSourceReceipt  `json:"inputSources,omitempty"`
 }
 
 type StartAnalysisRequest struct {
@@ -96,6 +100,8 @@ type StartAnalysisRequest struct {
 	Label                string `json:"label,omitempty"`
 	Note                 string `json:"note,omitempty"`
 	SemanticAnalysisMode string `json:"semanticAnalysisMode,omitempty"`
+	// ExecutionProfile is LIGHT, STANDARD, HEAVY or AUTO (default AUTO).
+	ExecutionProfile string `json:"executionProfile,omitempty"`
 }
 
 // AnalysisProvenance holds the run's execution and input snapshots verbatim.
@@ -107,22 +113,23 @@ type AnalysisProvenance struct {
 
 // AnalysisRun is one run of the engine over a subject's evidence.
 type AnalysisRun struct {
-	ContractVersion      string              `json:"contractVersion"`
-	SubjectID            string              `json:"subjectId"`
-	AnalysisID           string              `json:"analysisId"`
-	Status               string              `json:"status"`
-	Error                string              `json:"error,omitempty"`
-	Label                string              `json:"label,omitempty"`
-	Note                 string              `json:"note,omitempty"`
-	SemanticAnalysisMode string              `json:"semanticAnalysisMode,omitempty"`
-	ExecutionMode        string              `json:"executionMode,omitempty"`
-	Engine               *EngineBuild        `json:"engine,omitempty"`
-	ExecutionFingerprint string              `json:"executionFingerprint,omitempty"`
-	InputFingerprint     string              `json:"inputFingerprint,omitempty"`
-	Provenance           *AnalysisProvenance `json:"provenance,omitempty"`
-	CreatedAt            string              `json:"createdAt"`
-	StartedAt            string              `json:"startedAt,omitempty"`
-	FinishedAt           string              `json:"finishedAt,omitempty"`
+	ContractVersion      string                      `json:"contractVersion"`
+	SubjectID            string                      `json:"subjectId"`
+	AnalysisID           string                      `json:"analysisId"`
+	Status               string                      `json:"status"`
+	Error                string                      `json:"error,omitempty"`
+	Label                string                      `json:"label,omitempty"`
+	Note                 string                      `json:"note,omitempty"`
+	SemanticAnalysisMode string                      `json:"semanticAnalysisMode,omitempty"`
+	ExecutionMode        string                      `json:"executionMode,omitempty"`
+	Engine               *EngineBuild                `json:"engine,omitempty"`
+	ExecutionFingerprint string                      `json:"executionFingerprint,omitempty"`
+	InputFingerprint     string                      `json:"inputFingerprint,omitempty"`
+	Provenance           *AnalysisProvenance         `json:"provenance,omitempty"`
+	CreatedAt            string                      `json:"createdAt"`
+	StartedAt            string                      `json:"startedAt,omitempty"`
+	FinishedAt           string                      `json:"finishedAt,omitempty"`
+	ExecutionProfile     *ExecutionProfileResolution `json:"executionProfile,omitempty"`
 }
 
 // Terminal reports whether the run will not change status again.
@@ -158,12 +165,13 @@ type AnalysisResults struct {
 }
 
 type CreateResearchRunRequest struct {
-	ContractVersion      string   `json:"contractVersion"`
-	IdempotencyKey       string   `json:"idempotencyKey"`
-	Question             string   `json:"question"`
-	AnalysisID           string   `json:"analysisId"`
-	InputReferences      []string `json:"inputReferences,omitempty"`
-	SemanticAnalysisMode string   `json:"semanticAnalysisMode,omitempty"`
+	ContractVersion      string             `json:"contractVersion"`
+	IdempotencyKey       string             `json:"idempotencyKey"`
+	Question             string             `json:"question"`
+	AnalysisID           string             `json:"analysisId"`
+	InputReferences      []string           `json:"inputReferences,omitempty"`
+	SemanticAnalysisMode string             `json:"semanticAnalysisMode,omitempty"`
+	ObservationWindow    *ObservationWindow `json:"observationWindow,omitempty"`
 }
 
 // AddedEvidenceLink records which research gaps an added piece of evidence
@@ -175,11 +183,12 @@ type AddedEvidenceLink struct {
 }
 
 type AppendIterationRequest struct {
-	ContractVersion string              `json:"contractVersion"`
-	IdempotencyKey  string              `json:"idempotencyKey"`
-	AnalysisID      string              `json:"analysisId"`
-	Question        string              `json:"question,omitempty"`
-	AddedEvidence   []AddedEvidenceLink `json:"addedEvidence,omitempty"`
+	ContractVersion   string              `json:"contractVersion"`
+	IdempotencyKey    string              `json:"idempotencyKey"`
+	AnalysisID        string              `json:"analysisId"`
+	Question          string              `json:"question,omitempty"`
+	AddedEvidence     []AddedEvidenceLink `json:"addedEvidence,omitempty"`
+	ObservationWindow *ObservationWindow  `json:"observationWindow,omitempty"`
 }
 
 // ResearchResult is the latest iteration of a research run. Artifact is the

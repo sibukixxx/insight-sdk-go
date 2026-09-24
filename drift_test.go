@@ -3,6 +3,7 @@ package insight
 import (
 	"encoding/json"
 	"os"
+	"os/exec"
 	"reflect"
 	"sort"
 	"strings"
@@ -30,6 +31,12 @@ type schemaDef struct {
 	Type       string                     `json:"type"`
 	Properties map[string]json.RawMessage `json:"properties"`
 	Required   []string                   `json:"required"`
+}
+
+func init() {
+	for name, value := range generatedWireTypes {
+		wireTypes[name] = value
+	}
 }
 
 func loadSchema(t *testing.T) schemaDoc {
@@ -86,7 +93,8 @@ func TestSDKTypesMatchTheContractSchema(t *testing.T) {
 
 func TestSDKErrorCodesCoverTheContract(t *testing.T) {
 	known := map[string]bool{CodeInvalidRequest: true, CodeUnsupportedContractVersion: true, CodeNotFound: true, CodeIdempotencyConflict: true,
-		CodeIdentityConflict: true, CodeAnalysisNotCompleted: true, CodeAnalysisHasNoHypotheses: true, CodeMixedAnalysisRuns: true, CodeInternal: true}
+		CodeIdentityConflict: true, CodeAnalysisNotCompleted: true, CodeAnalysisHasNoHypotheses: true, CodeMixedAnalysisRuns: true, CodeInternal: true,
+		CodeStaleIteration: true, CodeExecutionProfileUnavailable: true, CodeInputSourceUnavailable: true, CodeInputVerificationFailed: true}
 	for code := range loadSchema(t).ErrorCodes {
 		if !known[code] {
 			t.Errorf("contract error code %s has no SDK constant", code)
@@ -101,5 +109,18 @@ func TestSDKModuleHasNoDependencies(t *testing.T) {
 	}
 	if strings.Contains(string(data), "require") {
 		t.Fatalf("the SDK must stay dependency-free and never require the Insight core module:\n%s", data)
+	}
+}
+
+func TestGeneratedTypesAreUpToDateWithPinnedSchema(t *testing.T) {
+	out := t.TempDir() + "/types_gen.go"
+	cmd := exec.Command("go", "run", "./internal/typegen", "-out", out)
+	if msg, err := cmd.CombinedOutput(); err != nil {
+		t.Fatalf("typegen: %v\n%s", err, msg)
+	}
+	want, _ := os.ReadFile(out)
+	got, _ := os.ReadFile("types_gen.go")
+	if string(want) != string(got) {
+		t.Fatal("types_gen.go is stale; run go run ./internal/typegen")
 	}
 }

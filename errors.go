@@ -6,16 +6,20 @@ import "fmt"
 // (x-errorCodes). CodeUnavailable is produced by the client when the server
 // cannot be reached or does not answer with a contract response.
 const (
-	CodeInvalidRequest             = "INVALID_REQUEST"
-	CodeUnsupportedContractVersion = "UNSUPPORTED_CONTRACT_VERSION"
-	CodeNotFound                   = "NOT_FOUND"
-	CodeIdempotencyConflict        = "IDEMPOTENCY_CONFLICT"
-	CodeIdentityConflict           = "IDENTITY_CONFLICT"
-	CodeAnalysisNotCompleted       = "ANALYSIS_NOT_COMPLETED"
-	CodeAnalysisHasNoHypotheses    = "ANALYSIS_HAS_NO_HYPOTHESES"
-	CodeMixedAnalysisRuns          = "MIXED_ANALYSIS_RUNS"
-	CodeInternal                   = "INTERNAL"
-	CodeUnavailable                = "UNAVAILABLE"
+	CodeInvalidRequest              = "INVALID_REQUEST"
+	CodeUnsupportedContractVersion  = "UNSUPPORTED_CONTRACT_VERSION"
+	CodeNotFound                    = "NOT_FOUND"
+	CodeIdempotencyConflict         = "IDEMPOTENCY_CONFLICT"
+	CodeIdentityConflict            = "IDENTITY_CONFLICT"
+	CodeAnalysisNotCompleted        = "ANALYSIS_NOT_COMPLETED"
+	CodeAnalysisHasNoHypotheses     = "ANALYSIS_HAS_NO_HYPOTHESES"
+	CodeMixedAnalysisRuns           = "MIXED_ANALYSIS_RUNS"
+	CodeStaleIteration              = "STALE_ITERATION"
+	CodeExecutionProfileUnavailable = "EXECUTION_PROFILE_UNAVAILABLE"
+	CodeInputSourceUnavailable      = "INPUT_SOURCE_UNAVAILABLE"
+	CodeInputVerificationFailed     = "INPUT_VERIFICATION_FAILED"
+	CodeInternal                    = "INTERNAL"
+	CodeUnavailable                 = "UNAVAILABLE"
 )
 
 // Error is a typed contract error. HTTPStatus is 0 when the error was raised
