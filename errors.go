@@ -16,6 +16,7 @@ const (
 	CodeMixedAnalysisRuns           = "MIXED_ANALYSIS_RUNS"
 	CodeStaleIteration              = "STALE_ITERATION"
 	CodeExecutionProfileUnavailable = "EXECUTION_PROFILE_UNAVAILABLE"
+	CodeModelBindingUnavailable     = "MODEL_BINDING_UNAVAILABLE"
 	CodeInputSourceUnavailable      = "INPUT_SOURCE_UNAVAILABLE"
 	CodeInputVerificationFailed     = "INPUT_VERIFICATION_FAILED"
 	CodeInternal                    = "INTERNAL"

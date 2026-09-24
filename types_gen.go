@@ -231,6 +231,12 @@ type MetricRange struct {
 	Min    float64 `json:"min"`
 }
 
+// ModelRouting: Per-run model binding extension point (#65): stages a caller may bind and the models the engine operator allowed (the configured model is always allowed). The engine never chooses models itself; bindings are execution config recorded in provenance.execution.llm.models and the execution fingerprint, and never change research semantics.
+type ModelRouting struct {
+	AllowedModels []string `json:"allowedModels"`
+	Stages        []string `json:"stages"`
+}
+
 // ObservationWindow: As-of boundary of a longitudinal iteration (#71). A later iteration may not use an earlier asOf than one already recorded.
 type ObservationWindow struct {
 	AsOf  string `json:"asOf"`
@@ -279,6 +285,8 @@ type RawArtifactRef struct {
 type ReEvaluationRecord struct {
 	AffectedGapIDs             []string            `json:"affectedGapIds"`
 	AffectedHypothesisIDs      []string            `json:"affectedHypothesisIds"`
+	AffectedScenarioIDs        []string            `json:"affectedScenarioIds,omitempty"`
+	AffectedScenarioSetID      string              `json:"affectedScenarioSetId,omitempty"`
 	CorrelationKey             string              `json:"correlationKey"`
 	EvidenceChanges            EvidenceChanges     `json:"evidenceChanges"`
 	ExecutionFingerprintAfter  string              `json:"executionFingerprintAfter,omitempty"`
@@ -684,6 +692,7 @@ var generatedWireTypes = map[string]any{
 	"InstrumentChange":            InstrumentChange{},
 	"MetricDelta":                 MetricDelta{},
 	"MetricRange":                 MetricRange{},
+	"ModelRouting":                ModelRouting{},
 	"ObservationWindow":           ObservationWindow{},
 	"PlanMove":                    PlanMove{},
 	"PlanProposer":                PlanProposer{},

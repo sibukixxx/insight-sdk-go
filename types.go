@@ -37,6 +37,7 @@ type EngineInfo struct {
 	AnalyticalArtifact        SchemaRef              `json:"analyticalArtifact"`
 	ExecutionProfiles         []ExecutionProfileInfo `json:"executionProfiles,omitempty"`
 	InputSourceKinds          []string               `json:"inputSourceKinds,omitempty"`
+	ModelRouting              *ModelRouting          `json:"modelRouting,omitempty"`
 }
 
 // CreateSubjectRequest creates or re-resolves a subject. ContractVersion and
@@ -102,6 +103,8 @@ type StartAnalysisRequest struct {
 	SemanticAnalysisMode string `json:"semanticAnalysisMode,omitempty"`
 	// ExecutionProfile is LIGHT, STANDARD, HEAVY or AUTO (default AUTO).
 	ExecutionProfile string `json:"executionProfile,omitempty"`
+	// ModelBindings maps pipeline stages to operator-allowed models (EngineInfo.ModelRouting).
+	ModelBindings map[string]string `json:"modelBindings,omitempty"`
 }
 
 // AnalysisProvenance holds the run's execution and input snapshots verbatim.

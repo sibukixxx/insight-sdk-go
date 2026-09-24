@@ -94,7 +94,7 @@ func TestSDKTypesMatchTheContractSchema(t *testing.T) {
 func TestSDKErrorCodesCoverTheContract(t *testing.T) {
 	known := map[string]bool{CodeInvalidRequest: true, CodeUnsupportedContractVersion: true, CodeNotFound: true, CodeIdempotencyConflict: true,
 		CodeIdentityConflict: true, CodeAnalysisNotCompleted: true, CodeAnalysisHasNoHypotheses: true, CodeMixedAnalysisRuns: true, CodeInternal: true,
-		CodeStaleIteration: true, CodeExecutionProfileUnavailable: true, CodeInputSourceUnavailable: true, CodeInputVerificationFailed: true}
+		CodeStaleIteration: true, CodeExecutionProfileUnavailable: true, CodeInputSourceUnavailable: true, CodeInputVerificationFailed: true, CodeModelBindingUnavailable: true}
 	for code := range loadSchema(t).ErrorCodes {
 		if !known[code] {
 			t.Errorf("contract error code %s has no SDK constant", code)
