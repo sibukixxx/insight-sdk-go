@@ -14,4 +14,4 @@ To resync, copy the upstream directory at a new revision, update this table and 
 
 ## Analytical Artifact v1
 
-`contract/analytical-artifact/v1/` (schema and fixtures) is a test snapshot of insight `contracts/analytical-artifact/v1/` at revision `9fd50185862365fbc133d1b63d2569f6a6b7a1a1` (insight `main`, 2026-09-25). Package `analytical` validates every pinned fixture.
+`contract/analytical-artifact/v1/` (`schema.json`, `temporal-operation.schema.json` and `fixtures/`) is a test snapshot of insight `contracts/analytical-artifact/v1/` at revision `c447f9f` (insight `main`, PR #104, 2026-09-25). Package `analytical` validates every pinned fixture.
