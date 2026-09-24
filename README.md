@@ -1,0 +1,67 @@
+# insight-sdk-go
+
+Thin, dependency-free Go client for the [Insight](https://github.com/sibukixxx/insight) **Public Engine Contract v1**.
+
+`sibukixxx/insight` owns Research semantics and the Public Contract. This SDK holds no research logic, scoring, storage, queue or domain policy, and never imports Insight's internal packages. The SDK is optional: the engine is fully usable through its HTTP contract alone.
+
+```text
+consumer
+   ↓
+insight-sdk-go        (this repository)
+   ↓
+Public Engine Contract (insight: contracts/public-engine/v1)
+   ↓
+insight OSS
+```
+
+## Install
+
+```sh
+go get github.com/sibukixxx/insight-sdk-go@v0.1.0
+```
+
+## Quickstart
+
+Start an engine (`insight-lab`, default `http://127.0.0.1:8787`), then:
+
+```go
+client := insight.NewClient("http://127.0.0.1:8787")
+subject, err := client.CreateSubject(ctx, insight.CreateSubjectRequest{
+	IdempotencyKey: "my-subject",
+	Subject:        insight.SubjectRef{Namespace: "my-app", ID: "item-42"},
+})
+// AddEvidence -> StartAnalysis -> WaitForAnalysis -> GetAnalysisResults
+// CreateResearchRun -> AppendIteration -> GetResearchRun
+```
+
+Runnable example: `go run ./example/minimal -engine http://127.0.0.1:8787`.
+
+- Errors are `*insight.Error` with a contract `Code`; `errors.Is(err, &insight.Error{Code: insight.CodeNotFound})` matches on the code. `CodeUnavailable` means the engine could not be reached or did not answer with a contract message.
+- The client fills `ContractVersion` and a random `IdempotencyKey` when empty. Reuse your own key on retry to get the first result back.
+- `context.Context` cancellation/timeouts are honoured on every call.
+- `WithTransport` replaces HTTP (in-process engine, recorded responses, queues) without changing request/result types. `WithHTTPClient` configures the default transport.
+- `ResearchResult.View()` decodes the research artifact fields the contract promises.
+
+## Compatibility
+
+| SDK version | Contract versions | Pinned contract source |
+|---|---|---|
+| v0.1.x | `1` | `contract/v1` — see [contract/PROVENANCE.md](contract/PROVENANCE.md) |
+
+- Pre-1.0 semver: minor versions may add operations/fields; patch versions never change behavior.
+- Unknown response fields are ignored (additive contract evolution). A response with a different `contractVersion` fails with `UNSUPPORTED_CONTRACT_VERSION`.
+- InputSource / RawArtifact (insight #90) and ExecutionProfile (insight #91) are additive follow-ups (#4, #5) and do not break v0 calls.
+
+## Verification
+
+```sh
+go vet ./... && go test ./...
+# live conformance against a running engine (deterministic fixtures):
+INSIGHT_DETERMINISTIC_URL=http://127.0.0.1:8787 go test ./conformance -run Live -v
+```
+
+`drift_test.go` fails when SDK types and the pinned `contract/v1/schema.json` diverge, and when `go.mod` gains any dependency. The pinned files are a test snapshot; upstream `insight` is authoritative.
+
+## License
+
+Apache-2.0
