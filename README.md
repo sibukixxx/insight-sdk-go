@@ -65,6 +65,21 @@ INSIGHT_DETERMINISTIC_URL=http://127.0.0.1:8787 go test ./conformance -run Live 
 
 `drift_test.go` fails when SDK types and the pinned `contract/v1/schema.json` diverge, and when `go.mod` gains any dependency. The pinned files are a test snapshot; upstream `insight` is authoritative.
 
+### Model-backed fixtures without a real LLM
+
+Fixtures whose `engine` is `model_backed` need an engine with a model. The insight repository ships a deterministic test model for this (insight PR #100, `cmd/insight-scripted-llm`):
+
+```sh
+# in a checkout of sibukixxx/insight
+go run ./cmd/insight-scripted-llm -addr 127.0.0.1:8788 &
+go run ./cmd/insight-lab -port 8787 -no-browser -base-url http://127.0.0.1:8788 -model scripted -api-key scripted &
+go run ./cmd/insight-lab -port 8789 -no-browser -input-root <this repo>/contract/v1/fixtures/data -heavy-dir /tmp/heavy &
+# here
+INSIGHT_DETERMINISTIC_URL=http://127.0.0.1:8789 INSIGHT_MODEL_BACKED_URL=http://127.0.0.1:8787 go test ./conformance -run Live -v
+```
+
+With that setup all 16 pinned fixtures pass (verified 2026-09-24 against insight `main`).
+
 ## License
 
 Apache-2.0
