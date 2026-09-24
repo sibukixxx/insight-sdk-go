@@ -38,6 +38,8 @@ type EngineInfo struct {
 	ExecutionProfiles         []ExecutionProfileInfo `json:"executionProfiles,omitempty"`
 	InputSourceKinds          []string               `json:"inputSourceKinds,omitempty"`
 	ModelRouting              *ModelRouting          `json:"modelRouting,omitempty"`
+	// ModelBacked is true when analyses can form hypotheses (a model is configured).
+	ModelBacked bool `json:"modelBacked"`
 }
 
 // CreateSubjectRequest creates or re-resolves a subject. ContractVersion and
