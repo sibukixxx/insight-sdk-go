@@ -1,5 +1,5 @@
 // Package conformance runs the shared Public Engine Contract fixtures
-// (contracts/public-engine/v1/fixtures) through the Go SDK against a live
+// (pinned in contract/v1/fixtures) through the Go SDK against a live
 // engine. The Node SDK runs the same files with the same rules, so both SDKs
 // are held to identical behavior.
 package conformance
