@@ -6,12 +6,12 @@
 |---|---|
 | Upstream repository | https://github.com/sibukixxx/insight |
 | Upstream path | `contracts/public-engine/v1/` |
-| Upstream revision | `ae44542912fc5b5350c95795abac9e28162b1fcf` (branch `feat/65-per-run-model-routing`, insight PR #101) |
+| Upstream revision | `9fd50185862365fbc133d1b63d2569f6a6b7a1a1` (insight `main`) |
 | Contract version | `1` |
-| Synced | 2026-09-24 |
+| Synced | 2026-09-25 |
 
 To resync, copy the upstream directory at a new revision, update this table and run `go test ./...`.
 
 ## Analytical Artifact v1
 
-`contract/analytical-artifact/v1/` (schema and fixtures) is a test snapshot of insight `contracts/analytical-artifact/v1/` at revision `a90b5d4ae1a63c28f93adb509974dc97b75c9049` (insight `main`, 2026-09-24). Package `analytical` validates every pinned fixture.
+`contract/analytical-artifact/v1/` (schema and fixtures) is a test snapshot of insight `contracts/analytical-artifact/v1/` at revision `9fd50185862365fbc133d1b63d2569f6a6b7a1a1` (insight `main`, 2026-09-25). Package `analytical` validates every pinned fixture.

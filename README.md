@@ -17,7 +17,7 @@ insight OSS
 ## Install
 
 ```sh
-go get github.com/sibukixxx/insight-sdk-go@v0.2.0
+go get github.com/sibukixxx/insight-sdk-go@v0.3.0
 ```
 
 ## Quickstart
@@ -50,6 +50,7 @@ Package `github.com/sibukixxx/insight-sdk-go/analytical` builds, seals (`artifac
 
 | SDK version | Contract versions | Pinned contract source |
 |---|---|---|
+| v0.3.x | `1` (adds modelBindings / modelRouting, timeline scenarioEvents, comparison informational diff; `analytical` package) | `contract/v1` + `contract/analytical-artifact/v1` — see [contract/PROVENANCE.md](contract/PROVENANCE.md) |
 | v0.2.x | `1` (adds InputSource, ExecutionProfile, run comparison, re-evaluation, timeline, temporal operations, scenarios, data triage) | `contract/v1` — see [contract/PROVENANCE.md](contract/PROVENANCE.md) |
 | v0.1.x | `1` (original v0 surface) | insight `e6e402d` |
 

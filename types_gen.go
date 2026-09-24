@@ -105,8 +105,9 @@ type EvidenceEvent struct {
 }
 
 type ExecutionAxisDiff struct {
-	Changes []FieldChange `json:"changes"`
-	State   string        `json:"state"`
+	Changes       []FieldChange `json:"changes"`
+	Informational []FieldChange `json:"informational,omitempty"`
+	State         string        `json:"state"`
 }
 
 type ExecutionProfileInfo struct {
@@ -364,6 +365,7 @@ type ResearchTimeline struct {
 	ObservationDeltas []TimelineObservationDelta `json:"observationDeltas"`
 	Question          string                     `json:"question"`
 	ResearchRunID     string                     `json:"researchRunId"`
+	ScenarioEvents    []TimelineScenarioEvent    `json:"scenarioEvents,omitempty"`
 	SubjectID         string                     `json:"subjectId"`
 }
 
@@ -631,6 +633,20 @@ type TimelineObservationDelta struct {
 	ToIterationID   string          `json:"toIterationId"`
 }
 
+// TimelineScenarioEvent: One append-only scenario evaluation summarized for the timeline. Ranks nothing and never names a most likely future.
+type TimelineScenarioEvent struct {
+	AssumptionsInvalidated []string               `json:"assumptionsInvalidated,omitempty"`
+	Contradicted           []ScenarioStatusChange `json:"contradicted,omitempty"`
+	EvaluatedAt            string                 `json:"evaluatedAt"`
+	EvaluationID           string                 `json:"evaluationId"`
+	FalsificationsFired    []FiredFalsification   `json:"falsificationsFired,omitempty"`
+	IterationID            string                 `json:"iterationId,omitempty"`
+	ScenarioSetID          string                 `json:"scenarioSetId"`
+	SetVersion             int                    `json:"setVersion"`
+	Strengthened           []ScenarioStatusChange `json:"strengthened,omitempty"`
+	Weakened               []ScenarioStatusChange `json:"weakened,omitempty"`
+}
+
 type TriageGapRef struct {
 	GapID              string   `json:"gapId"`
 	Need               string   `json:"need"`
@@ -733,6 +749,7 @@ var generatedWireTypes = map[string]any{
 	"TimeWindow":                  TimeWindow{},
 	"TimelineIteration":           TimelineIteration{},
 	"TimelineObservationDelta":    TimelineObservationDelta{},
+	"TimelineScenarioEvent":       TimelineScenarioEvent{},
 	"TriageGapRef":                TriageGapRef{},
 	"TriageRequest":               TriageRequest{},
 	"ValueRange":                  ValueRange{},
