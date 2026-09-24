@@ -42,6 +42,10 @@ Runnable example: `go run ./example/minimal -engine http://127.0.0.1:8787`.
 - `WithTransport` replaces HTTP (in-process engine, recorded responses, queues) without changing request/result types. `WithHTTPClient` configures the default transport.
 - `ResearchResult.View()` decodes the research artifact fields the contract promises.
 
+## Analytical Artifacts
+
+Package `github.com/sibukixxx/insight-sdk-go/analytical` builds, seals (`artifactHash`) and validates Analytical Artifact v1 — deterministic results produced outside Insight (SQL, dataframes, BI exports). Submit the exported JSON via `AddEvidenceRequest.AnalyticalArtifacts`. A result is never a cause or insight; unknown values are `missing`, never zero.
+
 ## Compatibility
 
 | SDK version | Contract versions | Pinned contract source |
