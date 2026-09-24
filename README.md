@@ -17,7 +17,7 @@ insight OSS
 ## Install
 
 ```sh
-go get github.com/sibukixxx/insight-sdk-go@v0.2.0
+go get github.com/sibukixxx/insight-sdk-go@v0.3.0
 ```
 
 ## Quickstart
@@ -42,10 +42,15 @@ Runnable example: `go run ./example/minimal -engine http://127.0.0.1:8787`.
 - `WithTransport` replaces HTTP (in-process engine, recorded responses, queues) without changing request/result types. `WithHTTPClient` configures the default transport.
 - `ResearchResult.View()` decodes the research artifact fields the contract promises.
 
+## Analytical Artifacts
+
+Package `github.com/sibukixxx/insight-sdk-go/analytical` builds, seals (`artifactHash`) and validates Analytical Artifact v1 — deterministic results produced outside Insight (SQL, dataframes, BI exports). Submit the exported JSON via `AddEvidenceRequest.AnalyticalArtifacts`. A result is never a cause or insight; unknown values are `missing`, never zero.
+
 ## Compatibility
 
 | SDK version | Contract versions | Pinned contract source |
 |---|---|---|
+| v0.3.x | `1` (adds modelBindings / modelRouting, timeline scenarioEvents, comparison informational diff; `analytical` package) | `contract/v1` + `contract/analytical-artifact/v1` — see [contract/PROVENANCE.md](contract/PROVENANCE.md) |
 | v0.2.x | `1` (adds InputSource, ExecutionProfile, run comparison, re-evaluation, timeline, temporal operations, scenarios, data triage) | `contract/v1` — see [contract/PROVENANCE.md](contract/PROVENANCE.md) |
 | v0.1.x | `1` (original v0 surface) | insight `e6e402d` |
 
