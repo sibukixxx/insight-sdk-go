@@ -17,7 +17,7 @@ insight OSS
 ## Install
 
 ```sh
-go get github.com/sibukixxx/insight-sdk-go@v0.5.0
+go get github.com/sibukixxx/insight-sdk-go@v0.6.0
 ```
 
 ## Quickstart
@@ -50,6 +50,7 @@ Package `github.com/sibukixxx/insight-sdk-go/analytical` builds, seals (`artifac
 
 | SDK version | Contract versions | Pinned contract source |
 |---|---|---|
+| v0.6.x | `1` (adds explicit ReasoningProfile, engine-supported/default profiles and generic research-artifact hypothesis alias; insight #111/#112) |
 | v0.5.x | `1` (adds domain-neutral `researchQuestion`, question input diff, generic evidence sources; insight #108) | `contract/v1` + `contract/analytical-artifact/v1` — see [contract/PROVENANCE.md](contract/PROVENANCE.md) |
 | v0.4.x | `1` (adds `EngineInfo.ModelBacked`, insight #104) | `contract/v1` + `contract/analytical-artifact/v1` — see [contract/PROVENANCE.md](contract/PROVENANCE.md) |
 | v0.3.x | `1` (adds modelBindings / modelRouting, timeline scenarioEvents, comparison informational diff; `analytical` package) | `contract/v1` + `contract/analytical-artifact/v1` — see [contract/PROVENANCE.md](contract/PROVENANCE.md) |
@@ -57,6 +58,7 @@ Package `github.com/sibukixxx/insight-sdk-go/analytical` builds, seals (`artifac
 | v0.1.x | `1` (original v0 surface) | insight `e6e402d` |
 
 - Pre-1.0 semver: minor versions may add operations/fields; patch versions never change behavior.
+- v0.6.0 adds explicit `ReasoningProfile` (`GENERAL_RESEARCH` default, `CUSTOMER_INSIGHT` opt-in). Profile changes are execution/semantic configuration changes, not evidence changes. `EngineInfo` advertises supported/default profiles. `ResearchResult.View()` exposes the generic `Hypothesis` alias from Research Artifact v1.
 - v0.5.0 makes the analysis question first-class semantic input. Set `StartAnalysisRequest.ResearchQuestion` when the later ResearchRun is answering a specific question; leave it empty for open-ended discovery. Same evidence under a different question is reported as an input change.
 - Unknown response fields are ignored (additive contract evolution). A response with a different `contractVersion` fails with `UNSUPPORTED_CONTRACT_VERSION`.
 - v0.2.0 added InputSource / RawArtifact (insight #90) and ExecutionProfile (insight #91) additively; every v0.1 call keeps working.
@@ -90,7 +92,7 @@ go run ./cmd/insight-lab -port 8789 -no-browser -db /tmp/insight-det.db \
 INSIGHT_DETERMINISTIC_URL=http://127.0.0.1:8789 INSIGHT_MODEL_BACKED_URL=http://127.0.0.1:8787 go test ./conformance -run Live -v
 ```
 
-Give each engine its own `-db`; without it both would share the default database in the OS data directory. The pinned fixture set remains 17 cases; v0.5.0 additionally relies on SDK drift/unit tests for the additive question-conditioned fields. The canonical contract is insight `main` at `9407a9f`. The canonical description of this setup is insight `docs/public-engine-contract.md` ("Running model-backed fixtures outside this repository"); if the two disagree, insight wins.
+Give each engine its own `-db`; without it both would share the default database in the OS data directory. The pinned fixture set is 18 cases; fixture 18 covers default/explicit ReasoningProfile, profile-only comparison attribution, and invalid profiles. The canonical contract is insight `main` at `07104a7d05601c7885a9be5e3c18a133dc132dec`. The canonical description of this setup is insight `docs/public-engine-contract.md` ("Running model-backed fixtures outside this repository"); if the two disagree, insight wins.
 
 ## License
 
