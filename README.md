@@ -96,7 +96,7 @@ go run ./cmd/insight-lab -port 8789 -no-browser -db /tmp/insight-det.db \
 INSIGHT_DETERMINISTIC_URL=http://127.0.0.1:8789 INSIGHT_MODEL_BACKED_URL=http://127.0.0.1:8787 go test ./conformance -run Live -v
 ```
 
-Give each engine its own `-db`; without it both would share the default database in the OS data directory. The pinned fixture set contains 18 cases; fixture 18 verifies the ReasoningProfile axis. The canonical contract is insight `main` at `e82ae4b`. The canonical description of this setup is insight `docs/public-engine-contract.md` ("Running model-backed fixtures outside this repository"); if the two disagree, insight wins.
+Give each engine its own `-db`; without it both would share the default database in the OS data directory. The pinned fixture set contains 18 cases; fixture 18 verifies the ReasoningProfile axis. The canonical contract is insight `main` at `51bc779`. The canonical description of this setup is insight `docs/public-engine-contract.md` ("Running model-backed fixtures outside this repository"); if the two disagree, insight wins.
 
 ## License
 

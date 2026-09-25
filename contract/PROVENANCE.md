@@ -6,7 +6,7 @@
 |---|---|
 | Upstream repository | https://github.com/sibukixxx/insight |
 | Upstream path | `contracts/public-engine/v1/` |
-| Upstream revision | `e82ae4b` (insight `main`, PRs #111/#112) |
+| Upstream revision | `51bc779` (insight `main`, PRs #111/#112/#114) |
 | Contract version | `1` |
 | Synced | 2026-09-25 |
 

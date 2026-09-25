@@ -29,17 +29,17 @@ type SchemaRef struct {
 }
 
 type EngineInfo struct {
-	ContractSchema            string                 `json:"contractSchema"`
-	ContractVersion           string                 `json:"contractVersion"`
-	SupportedContractVersions []string               `json:"supportedContractVersions"`
-	Engine                    EngineBuild            `json:"engine"`
-	ResearchArtifact          SchemaRef              `json:"researchArtifact"`
-	AnalyticalArtifact        SchemaRef              `json:"analyticalArtifact"`
+	ContractSchema             string                 `json:"contractSchema"`
+	ContractVersion            string                 `json:"contractVersion"`
+	SupportedContractVersions  []string               `json:"supportedContractVersions"`
+	Engine                     EngineBuild            `json:"engine"`
+	ResearchArtifact           SchemaRef              `json:"researchArtifact"`
+	AnalyticalArtifact         SchemaRef              `json:"analyticalArtifact"`
 	ExecutionProfiles          []ExecutionProfileInfo `json:"executionProfiles,omitempty"`
 	InputSourceKinds           []string               `json:"inputSourceKinds,omitempty"`
 	SupportedReasoningProfiles []string               `json:"supportedReasoningProfiles,omitempty"`
 	DefaultReasoningProfile    string                 `json:"defaultReasoningProfile,omitempty"`
-	ModelRouting              *ModelRouting          `json:"modelRouting,omitempty"`
+	ModelRouting               *ModelRouting          `json:"modelRouting,omitempty"`
 	// ModelBacked is true when analyses can form hypotheses (a model is configured).
 	ModelBacked bool `json:"modelBacked"`
 }
