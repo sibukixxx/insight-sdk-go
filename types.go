@@ -35,8 +35,10 @@ type EngineInfo struct {
 	Engine                    EngineBuild            `json:"engine"`
 	ResearchArtifact          SchemaRef              `json:"researchArtifact"`
 	AnalyticalArtifact        SchemaRef              `json:"analyticalArtifact"`
-	ExecutionProfiles         []ExecutionProfileInfo `json:"executionProfiles,omitempty"`
-	InputSourceKinds          []string               `json:"inputSourceKinds,omitempty"`
+	ExecutionProfiles          []ExecutionProfileInfo `json:"executionProfiles,omitempty"`
+	InputSourceKinds           []string               `json:"inputSourceKinds,omitempty"`
+	SupportedReasoningProfiles []string               `json:"supportedReasoningProfiles,omitempty"`
+	DefaultReasoningProfile    string                 `json:"defaultReasoningProfile,omitempty"`
 	ModelRouting              *ModelRouting          `json:"modelRouting,omitempty"`
 	// ModelBacked is true when analyses can form hypotheses (a model is configured).
 	ModelBacked bool `json:"modelBacked"`
@@ -106,6 +108,9 @@ type StartAnalysisRequest struct {
 	// ResearchQuestion optionally focuses domain-neutral semantic analysis.
 	// Empty means open-ended discovery.
 	ResearchQuestion string `json:"researchQuestion,omitempty"`
+	// ReasoningProfile selects an explicit semantic specialization. Empty
+	// means GENERAL_RESEARCH.
+	ReasoningProfile string `json:"reasoningProfile,omitempty"`
 	// ExecutionProfile is LIGHT, STANDARD, HEAVY or AUTO (default AUTO).
 	ExecutionProfile string `json:"executionProfile,omitempty"`
 	// ModelBindings maps pipeline stages to operator-allowed models (EngineInfo.ModelRouting).
@@ -130,6 +135,7 @@ type AnalysisRun struct {
 	Note                 string                      `json:"note,omitempty"`
 	SemanticAnalysisMode string                      `json:"semanticAnalysisMode,omitempty"`
 	ResearchQuestion     string                      `json:"researchQuestion,omitempty"`
+	ReasoningProfile     string                      `json:"reasoningProfile,omitempty"`
 	ExecutionMode        string                      `json:"executionMode,omitempty"`
 	Engine               *EngineBuild                `json:"engine,omitempty"`
 	ExecutionFingerprint string                      `json:"executionFingerprint,omitempty"`
