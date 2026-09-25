@@ -16,9 +16,13 @@ insight OSS
 
 ## Install
 
+Latest tagged release:
+
 ```sh
-go get github.com/sibukixxx/insight-sdk-go@v0.6.0
+go get github.com/sibukixxx/insight-sdk-go@v0.5.0
 ```
+
+Current `main` targets **v0.6.0** and adds ReasoningProfile support; tag it only after the verification checklist is complete.
 
 ## Quickstart
 
