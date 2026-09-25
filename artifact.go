@@ -28,6 +28,9 @@ type ResearchArtifactView struct {
 type ArtifactInsight struct {
 	ID                   string             `json:"id"`
 	Title                string             `json:"title"`
+	// Hypothesis is the domain-neutral alias exported by Research Artifact v1.
+	// Legacy customer-oriented fields remain upstream for compatibility.
+	Hypothesis           string             `json:"hypothesis,omitempty"`
 	HypothesisRole       string             `json:"hypothesisRole"`
 	HypothesisSetID      string             `json:"hypothesisSetId"`
 	ValidationStatus     string             `json:"validationStatus"`
