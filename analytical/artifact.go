@@ -177,8 +177,8 @@ func Export(a Artifact) ([]byte, error) {
 }
 
 // Seal fills schema identifiers and computes artifactHash from the canonical
-// serialization of the artifact with an empty artifactHash. TechVit is the
-// producer, so it owns this hash.
+// serialization of the artifact with an empty artifactHash. The artifact
+// producer owns this hash; the SDK does not attach consumer-specific policy.
 func (a *Artifact) Seal() error {
 	a.ArtifactSchema, a.SchemaVersion = Schema, Version
 	a.ArtifactHash = Hash{}
