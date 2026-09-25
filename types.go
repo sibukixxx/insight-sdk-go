@@ -5,6 +5,15 @@ import "encoding/json"
 // ContractVersion is the Public Engine Contract version this SDK speaks.
 const ContractVersion = "1"
 
+// ReasoningProfile selects an explicit semantic specialization of the shared
+// research core. It is independent from AnalysisMode and ExecutionProfile.
+type ReasoningProfile string
+
+const (
+	ReasoningProfileGeneralResearch ReasoningProfile = "GENERAL_RESEARCH"
+	ReasoningProfileCustomerInsight ReasoningProfile = "CUSTOMER_INSIGHT"
+)
+
 // Wire types mirror contracts/public-engine/v1/schema.json $defs one to one.
 // drift_test.go fails when either side gains or loses a property.
 
@@ -36,8 +45,8 @@ type EngineInfo struct {
 	ResearchArtifact          SchemaRef              `json:"researchArtifact"`
 	AnalyticalArtifact        SchemaRef              `json:"analyticalArtifact"`
 	ExecutionProfiles         []ExecutionProfileInfo `json:"executionProfiles,omitempty"`
-	SupportedReasoningProfiles []string               `json:"supportedReasoningProfiles,omitempty"`
-	DefaultReasoningProfile    string                 `json:"defaultReasoningProfile,omitempty"`
+	SupportedReasoningProfiles []ReasoningProfile     `json:"supportedReasoningProfiles,omitempty"`
+	DefaultReasoningProfile    ReasoningProfile       `json:"defaultReasoningProfile,omitempty"`
 	InputSourceKinds          []string               `json:"inputSourceKinds,omitempty"`
 	ModelRouting              *ModelRouting          `json:"modelRouting,omitempty"`
 	// ModelBacked is true when analyses can form hypotheses (a model is configured).
@@ -110,7 +119,7 @@ type StartAnalysisRequest struct {
 	ResearchQuestion string `json:"researchQuestion,omitempty"`
 	// ReasoningProfile is GENERAL_RESEARCH (default) or CUSTOMER_INSIGHT.
 	// It is explicit semantic/execution configuration and is never inferred.
-	ReasoningProfile string `json:"reasoningProfile,omitempty"`
+	ReasoningProfile ReasoningProfile `json:"reasoningProfile,omitempty"`
 	// ExecutionProfile is LIGHT, STANDARD, HEAVY or AUTO (default AUTO).
 	ExecutionProfile string `json:"executionProfile,omitempty"`
 	// ModelBindings maps pipeline stages to operator-allowed models (EngineInfo.ModelRouting).
@@ -135,7 +144,7 @@ type AnalysisRun struct {
 	Note                 string                      `json:"note,omitempty"`
 	SemanticAnalysisMode string                      `json:"semanticAnalysisMode,omitempty"`
 	ResearchQuestion     string                      `json:"researchQuestion,omitempty"`
-	ReasoningProfile     string                      `json:"reasoningProfile,omitempty"`
+	ReasoningProfile     ReasoningProfile            `json:"reasoningProfile,omitempty"`
 	ExecutionMode        string                      `json:"executionMode,omitempty"`
 	Engine               *EngineBuild                `json:"engine,omitempty"`
 	ExecutionFingerprint string                      `json:"executionFingerprint,omitempty"`
