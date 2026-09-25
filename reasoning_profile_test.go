@@ -6,12 +6,12 @@ import (
 )
 
 func TestReasoningProfileWireRoundTrip(t *testing.T) {
-	req := StartAnalysisRequest{ReasoningProfile: ReasoningProfileCustomerInsight}
+	req := StartAnalysisRequest{ContractVersion: ContractVersion, IdempotencyKey: "k", ReasoningProfile: ReasoningProfileCustomerInsight}
 	b, err := json.Marshal(req)
 	if err != nil {
 		t.Fatal(err)
 	}
-	if string(b) != `{"reasoningProfile":"CUSTOMER_INSIGHT"}` {
+	if string(b) != `{"contractVersion":"1","idempotencyKey":"k","reasoningProfile":"CUSTOMER_INSIGHT"}` {
 		t.Fatalf("unexpected request JSON: %s", b)
 	}
 
