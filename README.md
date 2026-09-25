@@ -50,7 +50,7 @@ Package `github.com/sibukixxx/insight-sdk-go/analytical` builds, seals (`artifac
 
 | SDK version | Contract versions | Pinned contract source |
 |---|---|---|
-| v0.6.x | `1` (adds explicit ReasoningProfile, engine-supported/default profiles and generic research-artifact hypothesis alias; insight #111/#112) |
+| v0.6.x | `1` (adds explicit ReasoningProfile, engine-supported/default profiles and generic research-artifact hypothesis alias; insight #111/#112) | `contract/v1` + `contract/analytical-artifact/v1` — see [contract/PROVENANCE.md](contract/PROVENANCE.md) |
 | v0.5.x | `1` (adds domain-neutral `researchQuestion`, question input diff, generic evidence sources; insight #108) | `contract/v1` + `contract/analytical-artifact/v1` — see [contract/PROVENANCE.md](contract/PROVENANCE.md) |
 | v0.4.x | `1` (adds `EngineInfo.ModelBacked`, insight #104) | `contract/v1` + `contract/analytical-artifact/v1` — see [contract/PROVENANCE.md](contract/PROVENANCE.md) |
 | v0.3.x | `1` (adds modelBindings / modelRouting, timeline scenarioEvents, comparison informational diff; `analytical` package) | `contract/v1` + `contract/analytical-artifact/v1` — see [contract/PROVENANCE.md](contract/PROVENANCE.md) |
@@ -92,7 +92,7 @@ go run ./cmd/insight-lab -port 8789 -no-browser -db /tmp/insight-det.db \
 INSIGHT_DETERMINISTIC_URL=http://127.0.0.1:8789 INSIGHT_MODEL_BACKED_URL=http://127.0.0.1:8787 go test ./conformance -run Live -v
 ```
 
-Give each engine its own `-db`; without it both would share the default database in the OS data directory. The pinned fixture set is 18 cases; fixture 18 covers default/explicit ReasoningProfile, profile-only comparison attribution, and invalid profiles. The canonical contract is insight `main` at `07104a7d05601c7885a9be5e3c18a133dc132dec`. The canonical description of this setup is insight `docs/public-engine-contract.md` ("Running model-backed fixtures outside this repository"); if the two disagree, insight wins.
+Give each engine its own `-db`; without it both would share the default database in the OS data directory. The pinned fixture set is 18 cases; fixture 18 covers engine-advertised profiles, explicit GENERAL_RESEARCH / CUSTOMER_INSIGHT runs, and profile-only comparison attribution. The canonical contract is insight `main` at `07104a7d05601c7885a9be5e3c18a133dc132dec`. The canonical description of this setup is insight `docs/public-engine-contract.md` ("Running model-backed fixtures outside this repository"); if the two disagree, insight wins.
 
 ## License
 
