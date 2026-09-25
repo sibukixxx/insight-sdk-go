@@ -6,7 +6,7 @@
 |---|---|
 | Upstream repository | https://github.com/sibukixxx/insight |
 | Upstream path | `contracts/public-engine/v1/` |
-| Upstream revision | `c447f9f` (insight `main`, PR #104) |
+| Upstream revision | `9407a9f` (insight `main`, PR #108) |
 | Contract version | `1` |
 | Synced | 2026-09-25 |
 
@@ -14,4 +14,4 @@ To resync, copy the upstream directory at a new revision, update this table and 
 
 ## Analytical Artifact v1
 
-`contract/analytical-artifact/v1/` (`schema.json`, `temporal-operation.schema.json` and `fixtures/`) is a test snapshot of insight `contracts/analytical-artifact/v1/` at revision `c447f9f` (insight `main`, PR #104, 2026-09-25). Package `analytical` validates every pinned fixture.
+`contract/analytical-artifact/v1/` (`schema.json`, `temporal-operation.schema.json` and `fixtures/`) is a test snapshot of insight `contracts/analytical-artifact/v1/` at revision `9407a9f` (insight `main`, PR #108, 2026-09-25). Package `analytical` validates every pinned fixture.

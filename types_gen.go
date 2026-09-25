@@ -159,13 +159,14 @@ type IndicatorObservation struct {
 }
 
 type InputAxisDiff struct {
-	DatasetHashesAdded   []string `json:"datasetHashesAdded"`
-	DatasetHashesRemoved []string `json:"datasetHashesRemoved"`
-	DatasetsAdded        []string `json:"datasetsAdded"`
-	DatasetsRemoved      []string `json:"datasetsRemoved"`
-	DocumentsAdded       []string `json:"documentsAdded"`
-	DocumentsRemoved     []string `json:"documentsRemoved"`
-	State                string   `json:"state"`
+	DatasetHashesAdded   []string     `json:"datasetHashesAdded"`
+	DatasetHashesRemoved []string     `json:"datasetHashesRemoved"`
+	DatasetsAdded        []string     `json:"datasetsAdded"`
+	DatasetsRemoved      []string     `json:"datasetsRemoved"`
+	DocumentsAdded       []string     `json:"documentsAdded"`
+	DocumentsRemoved     []string     `json:"documentsRemoved"`
+	ResearchQuestion     *FieldChange `json:"researchQuestion,omitempty"`
+	State                string       `json:"state"`
 }
 
 // InputSource: Additive input variant (#90). kind RAW_ARTIFACT registers an engine-verified reference. With preparation, the bytes are prepared into an Analytical Artifact when an analysis runs on STANDARD or HEAVY; without it the reference is recorded for provenance only and never analyzed as text.
