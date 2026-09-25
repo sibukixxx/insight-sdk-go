@@ -1,6 +1,6 @@
 # Pinned contract provenance
 
-`contract/v1/schema.json` and `contract/v1/fixtures/` are a test snapshot of the upstream Public Engine Contract. They are not authoritative; `sibukixxx/insight` is.
+`contract/v1/schema.json` andUpstream revision | `07104a7d05601c7885a9be5e3c18a133dc132dec` (insight `main`, through ReasoningProfile #111/#112)napshot of the upstream Public Engine Contract. They are not authoritative; `sibukixxx/insight` is.
 
 | Field | Value |
 |---|---|
