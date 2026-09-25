@@ -94,14 +94,14 @@ func validArtifact(t *testing.T) Artifact {
 	t.Helper()
 	ts := time.Date(2026, 9, 1, 0, 0, 0, 0, time.UTC)
 	a := Artifact{
-		ID: "a-1", Producer: "techvit-test", ProducerVersion: "0.1.0", GeneratedAt: ts,
+		ID: "a-1", Producer: "example-producer", ProducerVersion: "0.1.0", GeneratedAt: ts,
 		Datasets:    []DatasetRef{{ID: "ds", Version: "v1", Hash: SHA256([]byte("rows"))}},
 		Spec:        SpecRef{Kind: "declarative", Reference: "spec.json", Hash: SHA256([]byte("spec"))},
 		Period:      Period{Start: "2026-01", End: "2026-06"},
 		Population:  Population{Description: "rows"},
 		Metrics:     []MetricDefinition{{ID: "m", Name: "M", Unit: "count"}},
 		Results:     []Result{{MetricID: "m", Period: Period{Start: "2026-01", End: "2026-06"}, Value: NumberValue(3)}},
-		Computation: Computation{Engine: "techvit", EngineVersion: "0.1.0", Deterministic: true},
+		Computation: Computation{Engine: "example-engine", EngineVersion: "0.1.0", Deterministic: true},
 		Provenance:  []SourceProvenance{{DatasetID: "ds", Source: "urn:test", RetrievedAt: ts}},
 	}
 	if err := a.Seal(); err != nil {
