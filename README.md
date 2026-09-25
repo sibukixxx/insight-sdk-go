@@ -14,6 +14,34 @@ Public Engine Contract (insight: contracts/public-engine/v1)
 insight OSS
 ```
 
+
+<!-- role-boundary:v1 -->
+## Role and boundaries
+
+**Role:** Go consumersからInsight Public Engine Contractを安全に利用するための **thin client / compatibility layer**。
+
+### Owns
+
+- public request/response types
+- transport, cancellation, timeout, typed errors
+- contract-version compatibility and conformance
+- Analytical Artifact helper exposed by the public contract
+
+### Does not own
+
+- Research algorithms or semantics
+- storage, queue, scheduler, managed infrastructure
+- consumer/domain policy
+- private business workflow
+- a second copy of the Insight engine
+
+### Integration
+
+```text
+Go consumer → insight-sdk-go → Public Engine Contract → Insight
+```
+
+Upstream Insight contract is authoritative. SDK-specific convenience must not become new Research semantics.
 ## Install
 
 ```sh
