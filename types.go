@@ -39,10 +39,23 @@ type EngineInfo struct {
 	InputSourceKinds           []string               `json:"inputSourceKinds,omitempty"`
 	SupportedReasoningProfiles []string               `json:"supportedReasoningProfiles,omitempty"`
 	DefaultReasoningProfile    string                 `json:"defaultReasoningProfile,omitempty"`
-	ModelRouting               *ModelRouting          `json:"modelRouting,omitempty"`
+	// SupportedOutputLocales lists the StartAnalysisRequest.OutputLocale
+	// values the engine accepts. There is no default locale.
+	SupportedOutputLocales []string      `json:"supportedOutputLocales,omitempty"`
+	ModelRouting           *ModelRouting `json:"modelRouting,omitempty"`
 	// ModelBacked is true when analyses can form hypotheses (a model is configured).
 	ModelBacked bool `json:"modelBacked"`
+	// State is the opaque identity of the engine's persisted state; nil
+	// means unknown, never "the same state".
+	State *EngineState `json:"state,omitempty"`
 }
+
+// Output locales for model-generated text (StartAnalysisRequest.OutputLocale).
+// Exact, case-sensitive tags.
+const (
+	OutputLocaleJaJP = "ja-JP"
+	OutputLocaleEnUS = "en-US"
+)
 
 // CreateSubjectRequest creates or re-resolves a subject. ContractVersion and
 // IdempotencyKey are filled in by the client when empty.
@@ -111,6 +124,11 @@ type StartAnalysisRequest struct {
 	// ReasoningProfile selects an explicit semantic specialization. Empty
 	// means GENERAL_RESEARCH.
 	ReasoningProfile string `json:"reasoningProfile,omitempty"`
+	// OutputLocale optionally sets the language of new model-generated
+	// explanatory text (ja-JP / en-US). Empty keeps the source-language
+	// rule. Quotes, numbers, units, IDs and enum codes are never translated;
+	// an unsupported value is INVALID_REQUEST.
+	OutputLocale string `json:"outputLocale,omitempty"`
 	// ExecutionProfile is LIGHT, STANDARD, HEAVY or AUTO (default AUTO).
 	ExecutionProfile string `json:"executionProfile,omitempty"`
 	// ModelBindings maps pipeline stages to operator-allowed models (EngineInfo.ModelRouting).
@@ -136,6 +154,7 @@ type AnalysisRun struct {
 	SemanticAnalysisMode string                      `json:"semanticAnalysisMode,omitempty"`
 	ResearchQuestion     string                      `json:"researchQuestion,omitempty"`
 	ReasoningProfile     string                      `json:"reasoningProfile,omitempty"`
+	OutputLocale         string                      `json:"outputLocale,omitempty"`
 	ExecutionMode        string                      `json:"executionMode,omitempty"`
 	Engine               *EngineBuild                `json:"engine,omitempty"`
 	ExecutionFingerprint string                      `json:"executionFingerprint,omitempty"`

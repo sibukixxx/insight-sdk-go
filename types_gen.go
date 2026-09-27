@@ -80,6 +80,12 @@ type DatasetRef struct {
 	Version string `json:"version"`
 }
 
+// EngineState: Opaque identity of the persisted engine state (#116). stateId is generated once when the state store is initialized and persisted inside it: it survives restarts, changes for a fresh store and travels with a backup/restore of that store. It never encodes host, path or storage-provider details. Absent means unknown, never the same state.
+type EngineState struct {
+	CreatedAt string `json:"createdAt"`
+	StateID   string `json:"stateId"`
+}
+
 // EvaluateScenariosRequest: Evaluate a scenario set version against new observations.
 type EvaluateScenariosRequest struct {
 	AssumptionChecks []AssumptionCheck      `json:"assumptionChecks,omitempty"`
@@ -690,6 +696,7 @@ var generatedWireTypes = map[string]any{
 	"CreateScenarioSetRequest":    CreateScenarioSetRequest{},
 	"DatasetProfile":              DatasetProfile{},
 	"DatasetRef":                  DatasetRef{},
+	"EngineState":                 EngineState{},
 	"EvaluateScenariosRequest":    EvaluateScenariosRequest{},
 	"EvidenceChanges":             EvidenceChanges{},
 	"EvidenceEvent":               EvidenceEvent{},

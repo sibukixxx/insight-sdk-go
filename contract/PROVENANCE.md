@@ -6,9 +6,9 @@
 |---|---|
 | Upstream repository | https://github.com/sibukixxx/insight |
 | Upstream path | `contracts/public-engine/v1/` |
-| Upstream revision | `51bc779` (insight `main`, PRs #111/#112/#114) |
+| Upstream revision | `1a23a49` (insight `main`; adds #116 engine state identity and #125 output locale) |
 | Contract version | `1` |
-| Synced | 2026-09-25 |
+| Synced | 2026-09-27 |
 
 To resync, copy the upstream directory at a new revision, update this table and run `go test ./...`.
 
