@@ -82,6 +82,7 @@ Package `github.com/sibukixxx/insight-sdk-go/analytical` builds, seals (`artifac
 
 | SDK version | Contract versions | Pinned contract source |
 |---|---|---|
+| v0.7.x | `1` (adds optional `outputLocale` and `supportedOutputLocales`, insight #125; `EngineInfo.state`, insight #116) | `contract/v1` + `contract/analytical-artifact/v1` — see [contract/PROVENANCE.md](contract/PROVENANCE.md) |
 | v0.6.x | `1` (adds explicit `GENERAL_RESEARCH` / `CUSTOMER_INSIGHT` ReasoningProfile; insight #109) | `contract/v1` + `contract/analytical-artifact/v1` — see [contract/PROVENANCE.md](contract/PROVENANCE.md) |
 | v0.5.x | `1` (adds domain-neutral `researchQuestion`, question input diff, generic evidence sources; insight #108) | `contract/v1` + `contract/analytical-artifact/v1` — see [contract/PROVENANCE.md](contract/PROVENANCE.md) |
 | v0.4.x | `1` (adds `EngineInfo.ModelBacked`, insight #104) | `contract/v1` + `contract/analytical-artifact/v1` — see [contract/PROVENANCE.md](contract/PROVENANCE.md) |
@@ -91,6 +92,7 @@ Package `github.com/sibukixxx/insight-sdk-go/analytical` builds, seals (`artifac
 
 - Pre-1.0 semver: minor versions may add operations/fields; patch versions never change behavior.
 - v0.6.0 adds an explicit reasoning specialization axis. Omit `ReasoningProfile` for the domain-neutral `GENERAL_RESEARCH` default; set `CUSTOMER_INSIGHT` only when the original hidden-need/JTBD specialization is desired. Profile changes are execution/semantic changes, not evidence changes.
+- v0.7.0 adds the optional `StartAnalysisRequest.OutputLocale` (`ja-JP` / `en-US`, insight #125) with `EngineInfo.SupportedOutputLocales` and `AnalysisRun.OutputLocale`, and the opaque `EngineInfo.State` identity (insight #116). Omit `OutputLocale` to keep the engine's source-language rule; it is never a UI locale. Check `SupportedOutputLocales` before sending it: an engine without the field predates #125.
 - v0.5.0 makes the analysis question first-class semantic input. Set `StartAnalysisRequest.ResearchQuestion` when the later ResearchRun is answering a specific question; leave it empty for open-ended discovery. Same evidence under a different question is reported as an input change.
 - Unknown response fields are ignored (additive contract evolution). A response with a different `contractVersion` fails with `UNSUPPORTED_CONTRACT_VERSION`.
 - v0.2.0 added InputSource / RawArtifact (insight #90) and ExecutionProfile (insight #91) additively; every v0.1 call keeps working.
@@ -124,7 +126,7 @@ go run ./cmd/insight-lab -port 8789 -no-browser -db /tmp/insight-det.db \
 INSIGHT_DETERMINISTIC_URL=http://127.0.0.1:8789 INSIGHT_MODEL_BACKED_URL=http://127.0.0.1:8787 go test ./conformance -run Live -v
 ```
 
-Give each engine its own `-db`; without it both would share the default database in the OS data directory. The pinned fixture set contains 18 cases; fixture 18 verifies the ReasoningProfile axis. The canonical contract is insight `main` at `51bc779`. The canonical description of this setup is insight `docs/public-engine-contract.md` ("Running model-backed fixtures outside this repository"); if the two disagree, insight wins.
+Give each engine its own `-db`; without it both would share the default database in the OS data directory. The pinned fixture set contains 20 cases; fixture 18 verifies the ReasoningProfile axis, 19 the engine state identity and 20 the output locale. The canonical contract is insight `main` at `1a23a49`. The canonical description of this setup is insight `docs/public-engine-contract.md` ("Running model-backed fixtures outside this repository"); if the two disagree, insight wins.
 
 ## License
 
